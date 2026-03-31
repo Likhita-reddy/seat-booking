@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: payment-service
+
+booking:
+  service:
+    webhook:
+      url: ${BOOKING_WEBHOOK_URL:http://nginx:80/bookings/webhook/payment}
+      max-retries: 3
+      initial-backoff-ms: 1000
+
+webhook:
+  secret: ${WEBHOOK_SECRET:my-webhook-secret-key}
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [traceId=%X{traceId},spanId=%X{spanId}] %logger{36} - %msg%n"
+  level:
+    com.seatbooking: DEBUG
